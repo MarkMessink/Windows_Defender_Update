@@ -6,11 +6,11 @@
     Author:      Mark Messink
     Contact:     
     Created:     2022-05-04
-    Updated:     2023-02-02
+    Updated:     2022-12-21
 
     Version history:
     1.0.0 - (2022-05-04) Initial Script
-	1.0.1 - (21-12-2022) Script verniewd
+	1.0.1 - (2022-12-21) Script verniewd
 	1.1.0 - 
 
 .DESCRIPTION
@@ -52,7 +52,7 @@ $NameLogfile = "PSlog_DefenderUpdate.txt"
 $LowestWindowsBuild = 0
 $HighestWindowsBuild = 50000
 #minimum AntivirusSignatureVersion
-$MinVersion = "1.379.0.0" # nov 2022
+$MinVersion = "1.381.0.0" # dec 2022
 
 
 
@@ -72,7 +72,7 @@ If(!(test-path $logpath))
 }
 
 # Add date + time to Logfile
-$TimeStamp = "{0:yyyyMMdd-HHmm}" -f (get-date)
+$TimeStamp = "{0:yyyyMMdd}" -f (get-date)
 $logFile = "$logpath\" + "$TimeStamp" + "_" + "$NameLogfile"
 
 # Start Transcript logging
@@ -91,9 +91,9 @@ If ($WindowsBuild -ge $LowestWindowsBuild -And $WindowsBuild -le $HighestWindows
 #################### Start base script ################################
 
 #################### Start uitvoeren script code ####################
-Write-Output "-------------------------------------------------------------------------------------"
-Write-Output "### Start uitvoeren script code ###"
-Write-Output "-------------------------------------------------------------------------------------"
+Write-Output "#####################################################################################"
+Write-Output "### Start uitvoeren script code                                                   ###"
+Write-Output "#####################################################################################"
 
 	Write-Output "-------------------------------------------------------------------"
 	Write-Output "----- Check Defender Versions"
@@ -103,7 +103,7 @@ Write-Output "------------------------------------------------------------------
 	# AntivirusSignatureVersion $MinVersion
 	if((Get-MpComputerStatus).AntivirusSignatureVersion -le $MinVersion){
 	Write-Output "----- Update Defender, AntivirusSignatureVersion is lower then $MinVersion"
-	Update-MpSignature -verbose
+	Update-MpSignature
 	Write-Output "-------------------------------------------------------------------"
 	Write-Output "----- Check New Defender Versions"
 	Get-MpComputerStatus | select *updated, *version		
@@ -115,9 +115,9 @@ Write-Output "------------------------------------------------------------------
 	Write-Output "-------------------------------------------------------------------"
 	} 
 
-Write-Output "-------------------------------------------------------------------------------------"
-Write-Output "### Einde uitvoeren script code ###"
-Write-Output "-------------------------------------------------------------------------------------"
+Write-Output "#####################################################################################"
+Write-Output "### Einde uitvoeren script code                                                   ###"
+Write-Output "#####################################################################################"
 #################### Einde uitvoeren script code ####################
 
 #################### End base script #######################
