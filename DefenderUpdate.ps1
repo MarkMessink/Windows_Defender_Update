@@ -52,9 +52,7 @@ $NameLogfile = "PSlog_DefenderUpdate.txt"
 $LowestWindowsBuild = 0
 $HighestWindowsBuild = 50000
 #minimum AntivirusSignatureVersion
-$MinVersion = "1.381.2320.0" # jan 2023
-
-
+$MinVersion = "1.409.0.0" # apr 2024
 
 #################### Einde Variabelen ###############################
 
