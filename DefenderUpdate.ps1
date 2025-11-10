@@ -11,7 +11,7 @@
     Version history:
     1.0.0 - (2022-05-04) Initial Script
 	1.0.1 - (2022-12-21) Script verniewd
-	1.1.0 - 
+	1.1.0 - (2025-11-10) Change build numbers
 
 .DESCRIPTION
 	Update Windows Defender als de versie lager is dan opgegeven $MinVersion in de variabelen
@@ -37,22 +37,23 @@
 .LINK Information
 
 .NOTES
-	WindowsBuild:
+	WindowsBuild: 
 	Het script wordt uitgevoerd tussen de builds LowestWindowsBuild en HighestWindowsBuild
 	LowestWindowsBuild = 0 en HighestWindowsBuild 50000 zijn alle Windows 10/11 versies
-	LowestWindowsBuild = 19000 en HighestWindowsBuild 19999 zijn alle Windows 10 versies
-	LowestWindowsBuild = 22000 en HighestWindowsBuild 22999 zijn alle Windows 11 versies
+	LowestWindowsBuild = 26100 en HighestWindowsBuild 26999 zijn alle Windows 11 versies
 	Zie: https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
-
+	22H2 = 22621, 23H2 = 22631, 24H2 = 26100, 25H2 = 26200
 #>
 
 #################### Variabelen #####################################
 $logpath = "C:\IntuneLogs"
 $NameLogfile = "PSlog_DefenderUpdate.txt"
-$LowestWindowsBuild = 0
-$HighestWindowsBuild = 50000
-#minimum AntivirusSignatureVersion
-$MinVersion = "1.409.0.0" # apr 2024
+$LowestWindowsBuild = 22000
+$HighestWindowsBuild = 26999
+# minimum AntivirusSignatureVersion 
+# Powershell: (Get-MpComputerStatus).AntivirusSignatureVersion
+$MinVersion = "1.441.104.0" # nov 2025
+
 
 #################### Einde Variabelen ###############################
 
@@ -95,7 +96,7 @@ Write-Output "##################################################################
 
 	Write-Output "-------------------------------------------------------------------"
 	Write-Output "----- Check Defender Versions"
-	Get-MpComputerStatus | select *updated, *version
+	Get-MpComputerStatus | Select-Object *updated, *version
 	Write-Output "-------------------------------------------------------------------"
 	
 	# AntivirusSignatureVersion $MinVersion
@@ -104,7 +105,7 @@ Write-Output "##################################################################
 	Update-MpSignature
 	Write-Output "-------------------------------------------------------------------"
 	Write-Output "----- Check New Defender Versions"
-	Get-MpComputerStatus | select *updated, *version		
+	Get-MpComputerStatus | select-Object *updated, *version		
     Write-Output "-------------------------------------------------------------------"
 
 	}
